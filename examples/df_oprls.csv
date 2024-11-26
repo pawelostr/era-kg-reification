@@ -1,0 +1,9 @@
+,num,Kilometer,NationalIdentNum,OperationalPoint_num,ValidityDateStart,ValidityDateEnd
+0,OPRailwayLocation0,115.6,ESL270200071,OperationalPoint0,2015-11-19,2069-04-20
+1,OPRailwayLocation1,115.6,ESL270200131,OperationalPoint0,2015-11-19,2069-04-20
+2,OPRailwayLocation2,0,ESL222200450,OperationalPoint0,2015-11-19,2069-04-20
+3,OPRailwayLocation3,0,ESL222200460,OperationalPoint0,2015-11-19,2069-04-20
+4,OPRailwayLocation4,108.014,ESL276003370,OperationalPoint1,2015-11-19,2069-04-20
+5,OPRailwayLocation5,108.077,ESL276003380,OperationalPoint1,2015-11-19,2069-04-20
+6,OPRailwayLocation6,108.014,ESL276003350,OperationalPoint1,2015-11-19,2069-04-20
+7,OPRailwayLocation7,108.014,ESL276003360,OperationalPoint1,2015-11-19,2069-04-20

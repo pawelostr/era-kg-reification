@@ -1,0 +1,14 @@
+# GRAPH
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?opName (count(?opName) as ?howMany) where { 
+    graph ?g {
+        ?s era:opName ?opName .
+        BIND (xsd:string(?s) as ?subs)
+        FILTER (!regex(?subs,".*/.{2}/EU.*","i")) .
+	}
+} group by (?opName) order by desc(?howMany)
+

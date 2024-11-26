@@ -1,0 +1,22 @@
+# nested
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select ?lr_id (MIN(?min_lbl) as ?min_lbl_lbl) ?max_lbl (?max_lbl - MIN(?min_lbl) as ?length) where {
+    select ?lr_id (MAX(?lr_label_km) as ?max_lbl) ?min_lbl where {
+        {
+            select ?lr_id (MIN(?lr_label_km) as ?min_lbl)
+            where {
+                << << ?lr rdfs:label ?lr_label >> ?p ?o >> ?pp ?oo.
+                << << ?lr era:lineNationalId ?lr_id >> ?p ?o >> ?pp ?oo.
+                << << ?lr era:kilometer ?lr_label_km >> ?p ?o >> ?pp ?oo.
+            } group by ?lr_id 
+        }
+		<< << ?lr rdfs:label ?lr_label >> ?p ?o2 >> ?pp1 ?oo1.
+		<< << ?lr era:lineNationalId ?lr_id >> ?p ?o2 >> ?pp1 ?oo1.
+		<< << ?lr era:kilometer ?lr_label_km >> ?p ?o2 >> ?pp1 ?oo1.
+    } group by ?lr_id ?min_lbl
+} group by ?lr_id ?max_lbl order by desc(?length)

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RINFData>
+    <MemberStateCode Code="ES" Version="1.12"/>
+    <OperationalPoint ValidityDateStart="2015-11-19">
+        <OPName Value="BIF. AIGUES"/>
+        <UniqueOPID Value="ESB7901"/>
+        <OPTafTapCode IsApplicable="NYA"/>
+        <OPType Value="80" OptionalValue="junction"/>
+        <OPGeographicLocation Longitude="+2.1916000" Latitude="41.4558000"/>
+        <OPRailwayLocation Kilometer="115.6" NationalIdentNum="ESL270200071"/>
+        <OPRailwayLocation Kilometer="115.6" NationalIdentNum="ESL270200131"/>
+        <OPRailwayLocation Kilometer="0" NationalIdentNum="ESL222200450"/>
+        <OPRailwayLocation Kilometer="0" NationalIdentNum="ESL222200460"/>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="200071 01"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="Y" Value="60"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="200450 01"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="Y" Value="60"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="200460 02"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="Y" Value="60"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="200131 02"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="Y" Value="60"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+    </OperationalPoint>
+    <OperationalPoint ValidityDateStart="2015-11-19">
+        <OPName Value="BIF. SAGRERA-AG.KM. 108,0"/>
+        <UniqueOPID Value="ESB7943"/>
+        <OPTafTapCode IsApplicable="NYA"/>
+        <OPType Value="80" OptionalValue="junction"/>
+        <OPGeographicLocation Longitude="+2.2016600" Latitude="41.4278500"/>
+        <OPRailwayLocation Kilometer="108.014" NationalIdentNum="ESL276003370"/>
+        <OPRailwayLocation Kilometer="108.077" NationalIdentNum="ESL276003380"/>
+        <OPRailwayLocation Kilometer="108.014" NationalIdentNum="ESL276003350"/>
+        <OPRailwayLocation Kilometer="108.014" NationalIdentNum="ESL276003360"/>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="3350 01"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="Y" Value="ES/00000Q2801660H/2020/000031"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="N"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="3360 02"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="N"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="3370 01"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="N"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="3380 02"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="N"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="997182 I/II"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="N"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+        <OPTrack>
+            <OPTrackIMCode Value="0071"/>
+            <OPTrackIdentification Value="997183 II/DP TALGO"/>
+            <OPTrackParameter ID="IDE_ECVerification" IsApplicable="N"/>
+            <OPTrackParameter ID="IDE_EIDemonstration" IsApplicable="N"/>
+            <OPTrackParameter ID="IPP_TENClass" IsApplicable="Y" Value="40"/>
+            <OPTrackParameter ID="IPP_LineCat" IsApplicable="NYA"/>
+            <OPTrackParameter ID="IPP_FreightCorridor" IsApplicable="N"/>
+            <OPTrackParameter ID="ITP_NomGauge" IsApplicable="Y" Value="70"/>
+            <OPTrackParameter ID="ILL_Gauging" IsApplicable="NYA"/>
+        </OPTrack>
+    </OperationalPoint>
+</RINFData>

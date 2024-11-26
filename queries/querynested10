@@ -1,0 +1,27 @@
+# nested
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?id ?startDate ?end 
+where { 
+    {
+        select ?id ?name (MAX(?start) as ?startDate) ?end
+        where { 
+            << << ?s era:uopid ?id >> ?p ?start >> ?p2 ?end .
+            << << ?s era:opName ?name >> ?p ?start >> ?p2 ?end .
+            FILTER (!regex(xsd:string(?s),".*/.{2}/EU.*","i")) .
+            filter(?end < now()) .
+        } group by ?id ?name ?end order by desc(?startDate)
+    } .
+    OPTIONAL {
+        << << ?s era:uopid ?id >> ?p ?start >> ?p2 ?end_curr .
+        << << ?s era:opName ?name >> ?p ?start >> ?p2 ?end_curr .
+        FILTER (!regex(xsd:string(?s),".*/.{2}/EU.*","i")) .
+        filter(?start < now()) .
+        filter(?end_curr > now()) .
+    }
+    filter (!bound(?end_curr))
+} 

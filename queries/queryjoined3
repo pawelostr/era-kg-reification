@@ -1,0 +1,29 @@
+# JOINED
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?id ?name ?startDate (count(?lr) as ?noOfLines) (group_concat(?lrr; separator="; ") as ?lines) 
+where {
+    << ?s era:uopid ?id >> ?p ?val .
+    << ?s era:opName ?name >> ?p ?val .
+    << ?s era:lineReference ?lr >> ?p ?val .
+    << ?lr rdfs:label ?lrr >> ?p ?val2 .
+    ?val era:validityStart ?startDate .
+    ?val2 era:validityStart ?startDate .
+    {
+        select ?id ?name (MAX(?start) as ?startDate) 
+        where { 
+            << ?s era:uopid ?id >> ?p ?val .
+            << ?s era:opName ?name >> ?p ?val .
+            FILTER (!regex(xsd:string(?s),".*/.{2}/EU.*","i")) .
+            ?val era:validityStart ?start .
+            ?val era:validityEnd ?end .
+            filter(?start < "2024-01-01"^^xsd:date) .
+            filter(?end > "2024-01-01"^^xsd:date) .
+        } group by ?id ?name order by desc(?startDate)
+    } .
+} group by ?id ?name ?startDate order by desc(?noOfLines)
+

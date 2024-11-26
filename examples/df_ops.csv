@@ -1,0 +1,3 @@
+,num,UniqueOPID,OPName,OPTafTapCode,OPType@Value,OPType@OptionalValue,OPGeographicLocation@Longitude,OPGeographicLocation@Latitude,OPGeographicLocation@num,MemberStateCode,ValidityDateStart,ValidityDateEnd
+0,OperationalPoint0,ESB7901,BIF. AIGUES,NYA,80,junction,+2.1916000,41.4558000,OPGeographicLocation0,ES,2015-11-19,2069-04-20
+1,OperationalPoint1,ESB7943,"BIF. SAGRERA-AG.KM. 108,0",NYA,80,junction,+2.2016600,41.4278500,OPGeographicLocation1,ES,2015-11-19,2069-04-20

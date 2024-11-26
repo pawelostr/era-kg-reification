@@ -1,0 +1,25 @@
+# NESTED 3
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?id ?name ?startDate (count(?lr) as ?noOfLines) (group_concat(?lrr; separator="; ") as ?lines) 
+where {
+    << << ?s era:uopid ?id >> ?p ?startDate >> ?p2 ?end .
+    << << ?s era:opName ?name >> ?p ?startDate >> ?p2 ?end .
+    << << ?s era:lineReference ?lr >> ?p ?startDate >> ?p2 ?end .
+    << << ?lr rdfs:label ?lrr >> ?p ?startDate >> ?p2 ?end2 .
+    {
+        select ?id ?name (MAX(?start) as ?startDate) 
+        where { 
+            << << ?s era:uopid ?id >> ?p ?start >> ?p2 ?end .
+            << << ?s era:opName ?name >> ?p ?start >> ?p2 ?end .
+            FILTER (!regex(xsd:string(?s),".*/.{2}/EU.*","i")) .
+            filter(?start < now()) .
+            filter(?end > now()) .
+        } group by ?id ?name order by desc(?startDate)
+    } .
+} group by ?id ?name ?startDate order by desc(?noOfLines)
+
