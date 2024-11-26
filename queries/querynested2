@@ -1,0 +1,9 @@
+# STAR NESTED 2
+
+PREFIX era: <http://data.europa.eu/949/>
+
+select ?name ?start where { 
+    << <<?s era:uopid "ESB7943">> ?p ?start >> ?p2 ?end .
+    << <<?s era:opName ?name>> ?p ?start >> ?p2 ?end .
+} order by desc(?start) limit 1
+

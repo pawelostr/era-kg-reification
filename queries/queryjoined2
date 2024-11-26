@@ -1,0 +1,10 @@
+# STAR JOINED
+
+PREFIX era: <http://data.europa.eu/949/>
+
+select ?name ?start where { 
+    <<?s era:uopid "ESB7943">> ?p ?dates .
+    <<?s era:opName ?name>> ?p ?dates .
+    ?dates era:validityStart ?start .
+} order by desc(?start) limit 1
+

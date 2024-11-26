@@ -1,0 +1,9 @@
+# STD
+
+PREFIX era: <http://data.europa.eu/949/>
+
+select ?name ?start where { 
+	?s era:uopid "ESB7943" .
+    ?s era:opName ?name .
+    ?s era:validityStartDate ?start .
+} order by desc(?start) limit 1

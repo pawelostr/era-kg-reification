@@ -1,0 +1,15 @@
+# nested 9
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select ?taptap (count (?taptap) as ?tiptop) where { 
+    << << ?s era:tafTAPCode ?tap >> ?p1 ?start >> ?p2 ?end .
+    filter(?start < now()) .
+    filter(?end > now()) .
+    BIND(IF(contains(?tap, "NYA"),
+            "no TAP code",
+            "has TAP code") as ?taptap ).
+} group by ?taptap order by asc(?taptap)

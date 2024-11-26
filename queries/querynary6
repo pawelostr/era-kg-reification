@@ -1,0 +1,29 @@
+# STD / nary
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct 
+(substr(xsd:string(?lr_id), 51) as ?lrIRIend)
+(count(?id) as ?noOfOPSs) 
+(group_concat(?id; separator="; ") as ?ops) 
+where {
+    ?s era:uopid ?id .
+    ?s era:lineReference ?lr .
+    ?lr era:lineNationalId ?lr_id
+    {
+		select ?id (MAX(?start) as ?startDate) 
+        where { 
+            ?s era:uopid ?id .
+            ?s era:opName ?name .
+            ?s era:validityStartDate ?start .
+            ?s era:validityEndDate ?end .
+            ?s rdf:subject ?opiri .
+            FILTER (!regex(xsd:string(?opiri),".*/.{2}/EU.*","i")) .
+            filter(?start < now()) .
+            filter(?end > now()) .
+        } group by ?id ?name order by desc(?startDate)
+    } .
+} group by ?lr_id order by desc(?noOfOPSs)

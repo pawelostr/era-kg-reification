@@ -1,0 +1,26 @@
+# nested 6
+
+PREFIX era: <http://data.europa.eu/949/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct 
+(substr(xsd:string(?lr_id), 51) as ?lrIRIend)
+(count(?id) as ?noOfOPSs) 
+(group_concat(?id; separator="; ") as ?ops) 
+where {
+    << << ?s era:uopid ?id >> ?p1 ?o2 >> ?p11 ?o11 .
+    << << ?s era:lineReference ?lr >> ?p2 ?o2 >> ?p22 ?o22 .
+    << << ?lr era:lineNationalId ?lr_id >> ?p3 ?o3 >> ?p33 ?o33 .
+    {
+        select ?id ?name (MAX(?start) as ?startDate) 
+        where { 
+            << << ?s era:uopid ?id >> ?p ?start >> ?p2 ?end .
+            << << ?s era:opName ?name >> ?p ?start >> ?p2 ?end .
+            FILTER (!regex(xsd:string(?s),".*/.{2}/EU.*","i")) .
+            filter(?start < now()) .
+            filter(?end > now()) .
+        } group by ?id ?name order by desc(?startDate)
+    } .
+} group by ?lr_id order by desc(?noOfOPSs)

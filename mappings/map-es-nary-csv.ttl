@@ -1,0 +1,651 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rml: <http://w3id.org/rml/> .
+@prefix ex: <http://example/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://example.org/> .
+@base <http://example.org/> .
+
+@prefix idlab-fn: <http://example.com/idlab/function/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#>.
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#>.
+@prefix eu-country: <http://publications.europa.eu/resource/authority/country/>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix era: <http://data.europa.eu/949/>.
+@prefix era-op-types: <http://data.europa.eu/949/concepts/op-types/rinf/>.
+@prefix op: <http://data.europa.eu/949/functionalInfrastructure/operationalPoints/>.
+											
+
+# N-ary relations reification
+
+#                             _   _                   _               _       _       
+#   ___  _ __   ___ _ __ __ _| |_(_) ___  _ __   __ _| |  _ __   ___ (_)_ __ | |_ ___ 
+#  / _ \| '_ \ / _ \ '__/ _` | __| |/ _ \| '_ \ / _` | | | '_ \ / _ \| | '_ \| __/ __|
+# | (_) | |_) |  __/ | | (_| | |_| | (_) | | | | (_| | | | |_) | (_) | | | | | |_\__ \
+#  \___/| .__/ \___|_|  \__,_|\__|_|\___/|_| |_|\__,_|_| | .__/ \___/|_|_| |_|\__|___/
+#       |_|                                              |_|                          
+
+
+<#OperationalPointMapping> a rml:AssertedTriplesMap;
+	rml:logicalSource [
+		rml:source "src/df_ops.csv" ;
+		rml:referenceFormulation rml:CSV ;
+	];
+	# rml:subjectMap [
+	#   rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{UniqueOPID}" ;
+	#   rml:class era:OperationalPoint;
+	# ];
+
+	rml:subjectMap [
+		rml:template "{num}" ;
+		rml:termType rml:BlankNode;
+		rml:class era:OperationalPoint;
+	];
+	
+	rml:predicateObjectMap [
+		rml:predicate rdf:subject;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	]; 
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:predicate;
+	# 	rml:object rdf:type;
+	# ];
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:object;
+	# 	rml:object era:OperationalPoint;
+	# ];
+	
+	rml:predicateObjectMap [
+		rml:predicate rdfs:label;
+		rml:objectMap [
+			rml:reference "OPName" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:opName;
+		rml:objectMap [
+			rml:reference "OPName" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:uopid;
+		rml:objectMap [
+			rml:reference "UniqueOPID" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:tafTAPCode;
+		rml:objectMap [
+			rml:reference "OPTafTapCode" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:opType;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/concepts/op-types/rinf/{OPType@Value}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate geosparql:hasGeometry;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/locations/{OPGeographicLocation@Longitude}/{OPGeographicLocation@Latitude}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate wgs:location;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/locations/{OPGeographicLocation@Longitude}/{OPGeographicLocation@Latitude}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:hasAbstraction;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/topology/netElements/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityStartDate;
+		rml:objectMap [
+			rml:template "{ValidityDateStart}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityEndDate;
+		rml:objectMap [
+			rml:template "{ValidityDateEnd}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+
+	# OP LINE REFERENCE
+
+	# rml:predicateObjectMap [
+	#   rml:predicate era:lineReference;
+	#   rml:objectMap [
+	#       rml:template "http://data.europa.eu/949/functionalInfrastructure/lineReferences/{OPRailwayLocation/@NationalIdentNum}_{OPRailwayLocation/@Kilometer}" ;
+	#     rml:termType rml:IRI ;
+	#   ] 
+	# ];
+
+
+	rml:predicateObjectMap [
+		rml:predicate era:inCountry;
+		rml:objectMap [
+			rml:parentTriplesMap <#CountryMapping>;
+			rml:joinCondition [
+				rml:child "MemberStateCode";
+				rml:parent "code";
+			]
+		];
+
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:lineReference;
+		rml:objectMap [
+			rml:parentTriplesMap <#LineReferenceMapping>;
+			rml:joinCondition [
+				rml:child "num";
+				rml:parent "OperationalPoint_num";
+			]
+		];
+	].
+
+
+#                        _                                            _             
+#   ___ ___  _   _ _ __ | |_ _ __ _   _   _ __ ___   __ _ _ __  _ __ (_)_ __   __ _ 
+#  / __/ _ \| | | | '_ \| __| '__| | | | | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+# | (_| (_) | |_| | | | | |_| |  | |_| | | | | | | | (_| | |_) | |_) | | | | | (_| |
+#  \___\___/ \__,_|_| |_|\__|_|   \__, | |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+#                                 |___/                  |_|   |_|            |___/ 
+
+<#CountryMapping> a rml:AssertedTriplesMap;
+	rml:logicalSource [
+		# rml:source "src/countries-srt.csv" ; # TODO change to it
+		rml:source "src/countries-srt-es.csv" ;
+		rml:referenceFormulation rml:CSV
+	];
+
+	rml:subjectMap [
+		rml:template "http://publications.europa.eu/resource/authority/country/{eu}";
+		# rml:reference "eu";
+		rml:class rdfs:label
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:test;
+		rml:objectMap [
+			rml:reference "code"
+		]
+	].
+
+# http://publications.europa.eu/resource/authority/country/
+
+#  _                   _                         _       _       
+# | |__   ___  _ __ __| | ___ _ __   _ __   ___ (_)_ __ | |_ ___ 
+# | '_ \ / _ \| '__/ _` |/ _ \ '__| | '_ \ / _ \| | '_ \| __/ __|
+# | |_) | (_) | | | (_| |  __/ |    | |_) | (_) | | | | | |_\__ \
+# |_.__/ \___/|_|  \__,_|\___|_|    | .__/ \___/|_|_| |_|\__|___/
+#                                   |_|                          
+																															 
+
+# <#OperationalBorderPointMapping> a rml:NonAssertedTriplesMap;
+#   rml:logicalSource [
+#     # rml:source "src/ES-mini.xml" ;
+#     rml:source "src/ES-mini-mod-x2.xml" ;
+#     # rml:source "src/ES-mod.xml" ;
+#     # TODO maybe change to make it work without preprocessing??
+#     rml:iterator "/RINFData/OperationalBorderPoint" ;
+#     rml:referenceFormulation rml:XPath ;
+#   ];
+#   rml:subjectMap [
+#     rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{MemberStateCode/@Code}/{UniqueOPID/@Value}" ;
+#     rml:class era:BorderPoint;
+#   ];
+
+<#OperationalBorderPointMapping> a rml:AssertedTriplesMap;
+	rml:logicalSource [
+		rml:source "src/df_opBs.csv" ;
+		rml:referenceFormulation rml:CSV ;
+	];
+	# rml:subjectMap [
+	# 	rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{MemberStateCode}/{UniqueOPID}" ;
+	# 	rml:class era:OperationalPoint;
+	# ];
+
+	rml:subjectMap [
+		rml:template "{num}" ;
+		rml:termType rml:BlankNode;
+		rml:class era:OperationalPoint;
+	];
+	
+	rml:predicateObjectMap [
+		rml:predicate rdf:subject;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	]; 
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:predicate;
+	# 	rml:object rdf:type;
+	# ];
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:object;
+	# 	rml:object era:OperationalPoint;
+	# ];
+	
+	rml:predicateObjectMap [
+		rml:predicate era:canonicalURI;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	]; 
+	
+	rml:predicateObjectMap [
+		rml:predicate rdfs:label;
+		rml:objectMap [
+			rml:reference "OPName" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:opName;
+		rml:objectMap [
+			rml:reference "OPName" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:uopid;
+		rml:objectMap [
+			rml:reference "UniqueOPID" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:tafTAPCode;
+		rml:objectMap [
+			rml:reference "OPTafTapCode" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:opType;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/concepts/op-types/rinf/{OPType@Value}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate geosparql:hasGeometry;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/locations/{OPGeographicLocation@Longitude}/{OPGeographicLocation@Latitude}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate wgs:location;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/locations/{OPGeographicLocation@Longitude}/{OPGeographicLocation@Latitude}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:hasAbstraction;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/topology/netElements/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityStartDate;
+		rml:objectMap [
+			rml:template "{ValidityDateStart}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityEndDate;
+		rml:objectMap [
+			rml:template "{ValidityDateEnd}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+
+	# OP LINE REFERENCE
+
+	# rml:predicateObjectMap [
+	#   rml:predicate era:lineReference;
+	#   rml:objectMap [
+	#       rml:template "http://data.europa.eu/949/functionalInfrastructure/lineReferences/{OPRailwayLocation/@NationalIdentNum}_{OPRailwayLocation/@Kilometer}" ;
+	#     rml:termType rml:IRI ;
+	#   ] 
+	# ];
+
+
+	rml:predicateObjectMap [
+	rml:predicate era:inCountry;
+		rml:objectMap [
+			rml:parentTriplesMap <#CountryMapping>;
+			rml:joinCondition [
+				rml:child "MemberStateCode";
+				rml:parent "code";
+			]
+		];
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:lineReference;
+		rml:objectMap [
+			rml:parentTriplesMap <#LineReferenceMapping>;
+			rml:joinCondition [
+				rml:child "num";
+				rml:parent "OperationalPoint_num";
+			]
+		];
+	].
+
+<#EUOperationalBorderPointMapping> a rml:AssertedTriplesMap;
+	rml:logicalSource [
+		rml:source "src/df_opBs.csv" ;
+		rml:referenceFormulation rml:CSV ;
+	];
+	# rml:subjectMap [
+	# 	rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{MemberStateCode}/{UniqueOPID}" ;
+	# 	rml:class era:OperationalPoint;
+	# ];
+
+	rml:subjectMap [
+		rml:template "{num}-EU" ;
+		rml:termType rml:BlankNode;
+		rml:class era:OperationalPoint;
+	];
+	
+	rml:predicateObjectMap [
+		rml:predicate rdf:subject;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{MemberStateCode}/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	]; 
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:predicate;
+	# 	rml:object rdf:type;
+	# ];
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:object;
+	# 	rml:object era:OperationalPoint;
+	# ];
+	
+	rml:predicateObjectMap [
+		rml:predicate rdfs:label;
+		rml:objectMap [
+			rml:reference "OPName" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:opName;
+		rml:objectMap [
+			rml:reference "OPName" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:uopid;
+		rml:objectMap [
+			rml:reference "UniqueOPID" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:tafTAPCode;
+		rml:objectMap [
+			rml:reference "OPTafTapCode" ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:opType;
+		rml:objectMap [
+		rml:template "http://data.europa.eu/949/concepts/op-types/rinf/{OPType@Value}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:borderPointOf;
+		rml:objectMap [
+		rml:template "http://data.europa.eu/949/functionalInfrastructure/operationalPoints/{UniqueOPID}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityStartDate;
+		rml:objectMap [
+			rml:template "{ValidityDateStart}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityEndDate;
+		rml:objectMap [
+			rml:template "{ValidityDateEnd}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+
+	# OP LINE REFERENCE
+
+	# rml:predicateObjectMap [
+	#   rml:predicate era:lineReference;
+	#   rml:objectMap [
+	#       rml:template "http://data.europa.eu/949/functionalInfrastructure/lineReferences/{OPRailwayLocation/@NationalIdentNum}_{OPRailwayLocation/@Kilometer}" ;
+		#     rml:termType rml:IRI ;
+	#   ] 
+	# ];
+
+
+	rml:predicateObjectMap [
+		rml:predicate era:inCountry;
+		rml:objectMap [
+			rml:parentTriplesMap <#CountryMapping>;
+			rml:joinCondition [
+				rml:child "MemberStateCode";
+				rml:parent "code";
+			]
+		];
+	# ];
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate era:lineReference;
+	# 	rml:obj ectMap [
+	# 		rml:parentTriplesMap <#LineReferenceMapping>;
+	# 		rml:joinCondition [
+		# 		rml:child "num";
+		# 		rml:parent "OperationalPoint_num";
+	# 		]
+	# 	];
+	].
+	
+
+#  _ _                        __                              
+# | (_)_ __   ___   _ __ ___ / _| ___ _ __ ___ _ __   ___ ___ 
+# | | | '_ \ / _ \ | '__/ _ \ |_ / _ \ '__/ _ \ '_ \ / __/ _ \
+# | | | | | |  __/ | | |  __/  _|  __/ | |  __/ | | | (_|  __/
+# |_|_|_| |_|\___| |_|  \___|_|  \___|_|  \___|_| |_|\___\___|
+																														
+<#LineReferenceMapping> a rml:AssertedTriplesMap;
+	rml:logicalSource [
+		rml:source "src/df_oprls.csv" ;
+		rml:referenceFormulation rml:CSV ;
+	];
+	# rml:subjectMap [
+	# 	rml:template "http://data.europa.eu/949/functionalInfrastructure/lineReferences/{NationalIdentNum}_{Kilometer}" ;
+	# 	rml:class era:lineReference;
+	# ];
+
+	# std
+
+	rml:subjectMap [
+		rml:template "{num}" ;
+		rml:termType rml:BlankNode;
+		rml:class era:lineReference;
+	];
+	
+	rml:predicateObjectMap [
+		rml:predicate rdf:subject;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/functionalInfrastructure/lineReferences/{NationalIdentNum}_{Kilometer}" ;
+			rml:termType rml:IRI ;
+		] 
+	]; 
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:predicate;
+	# 	rml:object rdf:type;
+	# ];
+
+	# rml:predicateObjectMap [
+	# 	rml:predicate rdf:object;
+	# 	rml:object era:lineReference;
+	# ];
+
+	# std
+
+	rml:predicateObjectMap [
+		rml:predicate rdfs:label;
+		rml:objectMap [
+			rml:template "{Kilometer} {NationalIdentNum}" ;
+			rml:datatype xsd:string ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:lineNationalId;
+		rml:objectMap [
+			rml:template "http://data.europa.eu/949/functionalInfrastructure/nationalLines/{NationalIdentNum}" ;
+			rml:termType rml:IRI ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:kilometer;
+		rml:objectMap [
+			rml:template "{Kilometer}" ;
+			rml:datatype xsd:double ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityStartDate;
+		rml:objectMap [
+			rml:template "{ValidityDateStart}" ;
+			rml:datatype xsd:date ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate era:validityEndDate;
+		rml:objectMap [
+			rml:template "{ValidityDateEnd}" ;
+			rml:datatype xsd:date ;
+		] 
+
+	# ];
+
+	# rml:predicateObjectMap [
+	#   rml:predicate era:lineReference;
+	#     rml:objectMap [
+	#       rml:parentTriplesMap <#OperationalPointMapping>;
+	#       rml:joinCondition [
+	#         rml:child "OperationalPoint_num";
+	#         rml:parent "num";
+	#       ]
+	#     ];
+	].
+
+
+#  _                 _   _                                           _             
+# | | ___   ___ __ _| |_(_) ___  _ __    _ __ ___   __ _ _ __  _ __ (_)_ __   __ _ 
+# | |/ _ \ / __/ _` | __| |/ _ \| '_ \  | '_ ` _ \ / _` | '_ \| '_ \| | '_ \ / _` |
+# | | (_) | (_| (_| | |_| | (_) | | | | | | | | | | (_| | |_) | |_) | | | | | (_| |
+# |_|\___/ \___\__,_|\__|_|\___/|_| |_| |_| |_| |_|\__,_| .__/| .__/|_|_| |_|\__, |
+#                                                       |_|   |_|            |___/ 
+
+
+<#LocationMapping> a rml:AssertedTriplesMap;
+	rml:logicalSource [
+		rml:source "src/df_ops.csv" ;
+		rml:referenceFormulation rml:CSV ;
+	];
+
+	rml:subjectMap [
+		rml:template "http://data.europa.eu/949/locations/{OPGeographicLocation@Longitude}/{OPGeographicLocation@Latitude}" ;
+		rml:class wgs:Point;
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate rdf:type;
+		rml:object geosparql:Geometry;
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate wgs:lat;
+		rml:objectMap [
+			rml:template "{OPGeographicLocation@Latitude}" ;
+			rml:datatype xsd:double ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate wgs:long;
+		rml:objectMap [
+			rml:template "{OPGeographicLocation@Longitude}" ;
+			rml:datatype xsd:double ;
+		] 
+	];
+
+	rml:predicateObjectMap [
+		rml:predicate geosparql:asWKT;
+		rml:objectMap [
+			rml:template "POINT ({OPGeographicLocation@Longitude} {OPGeographicLocation@Latitude})" ;
+			rml:datatype geosparql:wktLiteral ;
+		] 
+	].
